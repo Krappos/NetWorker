@@ -11,10 +11,13 @@ namespace NetWorkBackEnd
     {
         string IsrName = Environment.UserName;
 
-        //string FolderPath => $@"C:\\Users\\{IsrName}\\WebSwitcher";
+
+        //for basic use
+        string FolderPath => $@"C:\\Users\\{IsrName}\\WebSwitcher";
 
 
-         string FolderPath => $@"C:\\WebSwitcher";
+        //for IT department
+         //string FolderPath => $@"C:\\WebSwitcher";
  
         
         string FilePath => Path.Combine(FolderPath, "path.txt");

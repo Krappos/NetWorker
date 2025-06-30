@@ -54,11 +54,14 @@ Public Class Form1
                 'funkcia na ulozenie hodnoty do suboru
                 file.WriteScript(value)
             End If
+
         End If
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+
         ProxyStatus()
+
     End Sub
 #End Region
 
