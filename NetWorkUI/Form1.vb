@@ -1,4 +1,5 @@
 ﻿Imports NetWorkBackEnd
+Imports System.IO
 Imports System.Threading.Tasks
 
 Public Class Form1
@@ -12,15 +13,33 @@ Public Class Form1
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.Opacity = 0.5
+        Me.Opacity = 0.8
         Me.FormBorderStyle = FormBorderStyle.None
 
+        Centering()
+
         startupInit() 'ak user prvy krat spusta apku tak mu skopiruje jeho script ak je
-        '
         LoadTb()
         StatusChecker()
         LoadDgv()
 
+    End Sub
+
+    Private Sub Centering()
+        Dim screenSizex = Screen.PrimaryScreen.WorkingArea.Width
+        Dim formSizex = Me.Width
+
+        Dim screenSize = Screen.PrimaryScreen.WorkingArea.Height
+        Dim formSize = Me.Height
+
+
+        Dim posX = (screenSizex - formSizex) / 2
+        Dim posY = (screenSize - formSize) / 4
+
+
+
+        Me.StartPosition = FormStartPosition.Manual
+        Me.Location = New Point(posX, posY)
     End Sub
 
     Private Sub startupInit()
@@ -79,8 +98,6 @@ Public Class Form1
             Dim adapterName = row.Cells("name").Value.ToString
 
             task.ToggleAdapterStatus(adapterName)
-
-            'MsgBox("TESTOVANIE")
             Await Threading.Tasks.Task.Delay(10000)
             LoadDgv()
 
