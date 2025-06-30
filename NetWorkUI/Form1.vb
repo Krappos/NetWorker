@@ -6,12 +6,14 @@ Public Class Form1
 
     ' datagridviewname DgvNet 
 
-
+#Region "Classes and objects"
     Dim task As New NetTask()
     Dim file As New ValueHolder()
     Dim proxy As New ProxySetter()
+#End Region
 
 
+#Region "Form Controls"
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Opacity = 0.8
         Me.FormBorderStyle = FormBorderStyle.None
@@ -19,78 +21,10 @@ Public Class Form1
         Centering()
 
         startupInit() 'ak user prvy krat spusta apku tak mu skopiruje jeho script ak je
-        LoadTb()
         StatusChecker()
         LoadDgv()
 
     End Sub
-
-    Private Sub Centering()
-        Dim screenSizex = Screen.PrimaryScreen.WorkingArea.Width
-        Dim formSizex = Me.Width
-
-        Dim screenSize = Screen.PrimaryScreen.WorkingArea.Height
-        Dim formSize = Me.Height
-
-
-        Dim posX = (screenSizex - formSizex) / 2
-        Dim posY = (screenSize - formSize) / 4
-
-
-
-        Me.StartPosition = FormStartPosition.Manual
-        Me.Location = New Point(posX, posY)
-    End Sub
-
-    Private Sub startupInit()
-        If task.IsScriptAllowed Then
-            Dim values = task.FirstBoot()
-            file.WriteScript(values)
-        End If
-    End Sub
-    Private Sub LoadTb()
-        Tb_script.Text = file.ReadScript()
-    End Sub
-
-    'zisti ci je pri zaupnti script povolene
-    Private Sub StatusChecker()
-        If task.IsScriptAllowed() Then
-            CheckBox1.Checked = True
-
-        Else
-            CheckBox1.Checked = False
-        End If
-        InitDisabler()
-    End Sub
-
-    Private Sub InitDisabler()
-        If CheckBox1.Checked Then
-            Tb_script.Font = New Font(Tb_script.Font, FontStyle.Regular)
-            Tb_script.ReadOnly = False
-        Else
-            Tb_script.ReadOnly = True
-            Tb_script.Font = New Font(Tb_script.Font, FontStyle.Strikeout)
-        End If
-    End Sub
-    Private Sub ProxyStatus()
-        If CheckBox1.Checked Then
-            proxy.EnableProxyScript()
-            Tb_script.Font = New Font(Tb_script.Font, FontStyle.Regular)
-
-        Else
-
-            Tb_script.Font = New Font(Tb_script.Font, FontStyle.Strikeout)
-            proxy.DisableProxyScript()
-        End If
-    End Sub
-
-
-    Private Sub LoadDgv()
-        Dim cards = task.GetNetWorkCards()
-        DgvNet.DataSource = cards
-    End Sub
-
-
 
     Private Async Sub DgvNet_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvNet.CellDoubleClick
         If e.RowIndex >= 0 Then
@@ -127,4 +61,64 @@ Public Class Form1
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
         ProxyStatus()
     End Sub
+#End Region
+
+#Region "aditional methods"
+
+    Private Sub Centering()
+        Dim screenSizex = Screen.PrimaryScreen.WorkingArea.Width
+        Dim formSizex = Me.Width
+
+        Dim screenSize = Screen.PrimaryScreen.WorkingArea.Height
+        Dim formSize = Me.Height
+
+
+        Dim posX = (screenSizex - formSizex) / 2
+        Dim posY = (screenSize - formSize) / 4
+
+
+
+        Me.StartPosition = FormStartPosition.Manual
+        Me.Location = New Point(posX, posY)
+    End Sub
+
+    Private Sub startupInit()
+        If task.IsScriptAllowed Then
+            Dim values = task.FirstBoot()
+            file.WriteScript(values)
+        End If
+    End Sub
+
+    'zisti ci je pri zaupnti script povolene
+    Private Sub StatusChecker()
+        If task.IsScriptAllowed() Then
+            CheckBox1.Checked = True
+            Tb_script.Font = New Font(Tb_script.Font, FontStyle.Regular)
+            Tb_script.ReadOnly = False
+        Else
+            CheckBox1.Checked = False
+            Tb_script.ReadOnly = True
+            Tb_script.Font = New Font(Tb_script.Font, FontStyle.Strikeout)
+        End If
+    End Sub
+
+    Private Sub ProxyStatus()
+        If CheckBox1.Checked Then
+            proxy.EnableProxyScript()
+            Tb_script.Font = New Font(Tb_script.Font, FontStyle.Regular)
+
+        Else
+
+            Tb_script.Font = New Font(Tb_script.Font, FontStyle.Strikeout)
+            proxy.DisableProxyScript()
+        End If
+    End Sub
+
+
+    Private Sub LoadDgv()
+        Dim cards = task.GetNetWorkCards()
+        DgvNet.DataSource = cards
+        Tb_script.Text = file.ReadScript()
+    End Sub
+#End Region
 End Class

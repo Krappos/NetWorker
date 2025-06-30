@@ -76,6 +76,16 @@
         {
             "LaunchCondition"
             {
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_CABC28924AD940679C5CAE26AF52F751"
+                {
+                "Name" = "8:.NET Core"
+                "Message" = "8:[VSDNETCOREMSG]"
+                "AllowLaterVersions" = "11:FALSE"
+                "InstallUrl" = "8:https://dotnet.microsoft.com/download/dotnet-core/[NetCoreVerMajorDotMinor]"
+                "IsNETCore" = "11:TRUE"
+                "Architecture" = "2:0"
+                "Runtime" = "2:0"
+                }
             }
         }
         "File"
@@ -137,7 +147,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:NetSwitcherInstaller"
         "ProductCode" = "8:{FC7C0984-DC99-4BB7-A6B6-E433131F4357}"
-        "PackageCode" = "8:{81ED2DA5-5E2F-499E-BC74-E912168550D5}"
+        "PackageCode" = "8:{0B036BDC-D1F4-4EE1-A625-6B8EE135A6BE}"
         "UpgradeCode" = "8:{732BFD8F-2325-4D99-886D-82EF66FA2AFD}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
