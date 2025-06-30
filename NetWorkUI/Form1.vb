@@ -7,7 +7,7 @@ Public Class Form1
     ' datagridviewname DgvNet 
 
 #Region "Classes and objects"
-    Dim task As New NetTask()
+    Dim taskNet As New NetTask()
     Dim file As New ValueHolder()
     Dim proxy As New ProxySetter()
 #End Region
@@ -30,7 +30,7 @@ Public Class Form1
             Dim row = DgvNet.Rows(e.RowIndex)
             Dim adapterName = row.Cells("name").Value.ToString
 
-            task.ToggleAdapterStatus(adapterName)
+            taskNet.ToggleAdapterStatus(adapterName)
             Await Threading.Tasks.Task.Delay(10000)
             LoadDgv()
 
@@ -47,7 +47,7 @@ Public Class Form1
 
         If e.KeyValue = Keys.Enter Then
 
-            If Tb_script.Text = "" Then
+            If String.IsNullOrWhiteSpace(Tb_script.Text) Then
                 MsgBox("Zadaj adresu scriptu")
             Else
                 Dim value As String = Tb_script.Text.Trim()
@@ -72,15 +72,15 @@ Public Class Form1
     End Sub
 
     Private Sub startupInit()
-        If task.IsScriptAllowed Then
-            Dim values = task.FirstBoot()
+        If taskNet.IsScriptAllowed Then
+            Dim values = taskNet.FirstBoot()
             file.WriteScript(values)
         End If
     End Sub
 
     'zisti ci je pri zaupnti script povolene
     Private Sub StatusChecker()
-        If task.IsScriptAllowed() Then
+        If taskNet.IsScriptAllowed() Then
             CheckBox1.Checked = True
             Tb_script.Font = New Font(Tb_script.Font, FontStyle.Regular)
             Tb_script.ReadOnly = False
@@ -105,7 +105,7 @@ Public Class Form1
 
 
     Private Sub LoadDgv()
-        Dim cards = task.GetNetWorkCards()
+        Dim cards = taskNet.GetNetWorkCards()
         DgvNet.DataSource = cards
         Tb_script.Text = file.ReadScript()
     End Sub
