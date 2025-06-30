@@ -19,7 +19,6 @@ Public Class Form1
         Me.FormBorderStyle = FormBorderStyle.None
 
         Centering()
-
         startupInit() 'ak user prvy krat spusta apku tak mu skopiruje jeho script ak je
         StatusChecker()
         LoadDgv()
@@ -66,20 +65,10 @@ Public Class Form1
 #Region "aditional methods"
 
     Private Sub Centering()
-        Dim screenSizex = Screen.PrimaryScreen.WorkingArea.Width
-        Dim formSizex = Me.Width
-
-        Dim screenSize = Screen.PrimaryScreen.WorkingArea.Height
-        Dim formSize = Me.Height
-
-
-        Dim posX = (screenSizex - formSizex) / 2
-        Dim posY = (screenSize - formSize) / 4
-
-
+        Dim screenC = Screen.PrimaryScreen.WorkingArea
 
         Me.StartPosition = FormStartPosition.Manual
-        Me.Location = New Point(posX, posY)
+        Me.Location = New Point((screenC.Width - Me.Width) \ 2, (screenC.Height - Me.Height) \ 4)
     End Sub
 
     Private Sub startupInit()
