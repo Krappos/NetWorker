@@ -17,7 +17,7 @@ namespace NetWorkBackEnd
 
 
         //for IT department
-         //string FolderPath => $@"C:\\WebSwitcher";
+        //string FolderPath => $@"C:\\WebSwitcher";
  
         
         string FilePath => Path.Combine(FolderPath, "path.txt");

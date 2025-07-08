@@ -7,7 +7,9 @@ namespace NetWorkBackEnd;
 [SupportedOSPlatform("windows")]
 public class NetTask
     {
+
     //funkcia na načítanie hodnôt
+
          public  List<NetWorkCls> GetNetWorkCards(){
             var list = new List<NetWorkCls>();
             var searcher = new ManagementObjectSearcher(
