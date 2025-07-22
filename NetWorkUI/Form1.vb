@@ -6,8 +6,9 @@ Imports Windows.Win32.System
 
 Public Class Form1
 
-#Region "Classes and objects"
 
+#Region "Classes and objects"
+    Dim Refresher As New Refresh()
     Dim taskNet As New NetTask()
     Dim file As New ValueHolder()
     Dim proxy As New ProxySetter()
@@ -26,28 +27,46 @@ Public Class Form1
 
     Public Sub New()
 
+        ' init()
+
+
         InitializeComponent()
 
     End Sub
 
-    Private Sub init()
-        Dim nWinHandle As IntPtr = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Progman", Nothing)
-        nWinHandle = FindWindowEx(nWinHandle, IntPtr.Zero, "SHELLDLL_DefView", Nothing)
-        SetParent(Handle, nWinHandle)
-    End Sub
+    ' Private Sub init()
+    ' Dim nWinHandle As IntPtr = FindWindowEx(IntPtr.Zero, IntPtr.Zero, "Progman", Nothing)
+    '    nWinHandle = FindWindowEx(nWinHandle, IntPtr.Zero, "SHELLDLL_DefView", Nothing)
+    '     SetParent(Handle, nWinHandle)
+    ' End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AddHandler Refresher.StatusChanged, AddressOf newStatus
+
+        Refresher.StartMonitoring(Me.Handle)
+        ConfigureForm()
+        InitializeApplication()
+    End Sub
+
+    Private Sub newStatus()
+        LoadDgv()
+        MsgBox("test")
+    End Sub
+
+
+    Private Sub ConfigureForm()
+        ' Nastavenie vlastností formulára
         Me.Opacity = 0.8
         Me.FormBorderStyle = FormBorderStyle.None
-
         Centering()
+    End Sub
+
+    Private Sub InitializeApplication()
+        ' Inicializácia aplikácie
         startupInit()
         StatusChecker()
         LoadDgv()
-
-
     End Sub
-
 
     Private Sub Centering()
         Dim screenC = Screen.PrimaryScreen.WorkingArea
